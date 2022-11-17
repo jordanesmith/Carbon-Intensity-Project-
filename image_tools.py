@@ -1,4 +1,6 @@
 from PIL import Image
+
+import cv2
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -40,6 +42,34 @@ def identify_rgb_of_data(df_coloured_pixels, col_names, show_plots=False):
         return target_col_dict, fig.tight_layout()
     else:
         return target_col_dict
+    
+
+def find_all_data_point_pixel_locations(img, target_col_dict):
+
+    img_arr = np.asarray(img)
+    target_arr = np.array([val for val in target_col_dict.values()])
+    data_pixels_coords = []
+    for i,row in enumerate(img_arr):
+        for j,pixel in enumerate(row):
+            if all(pixel == target_arr): # without this, the pixels top left from the colour label in original image will be detected
+                if i >= 200:
+                    data_pixels_coords.append([j,i])
+
+    arr_data_pix_coords = np.array(data_pixels_coords)
+    
+    return arr_data_pix_coords
+
+
+
+def convolve_image_horizontal_filter(img, width=25):
+
+    convolution_kernel = np.array([[-1]*width, 
+                                   [2]*width, 
+                                   [-1]*width])
+    img_arr = np.asarray(img)
+    result_x = cv2.filter2D(img_arr, -1, convolution_kernel)
+    
+    return result_x
 
 
 
