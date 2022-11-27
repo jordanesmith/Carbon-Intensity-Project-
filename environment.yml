@@ -1,0 +1,4 @@
+name: carbon
+channels:
+  - defaults
+prefix: /Users/jordansmith/opt/anaconda3/envs/carbon
