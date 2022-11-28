@@ -1,8 +1,8 @@
 import numpy as np
 import scipy
 
-from image_tools import convolve_image_horizontal_filter
-from data_tools import generate_dict_y_coords_for_kW
+from src import image_tools
+from src import data_tools
     
 def remove_double_peaks(peaks_x, r_arr):
     peaks_y = r_arr[peaks_x]
@@ -56,10 +56,10 @@ def find_peaks(arr):
 
 def compute_y_calibrations(img):
 
-    img_convolved_horizontal_filter = convolve_image_horizontal_filter(img) 
+    img_convolved_horizontal_filter = image_tools.convolve_image_horizontal_filter(img) 
     sum_arr_along_x = np.sum(img_convolved_horizontal_filter, axis=1)
     filtered_sum_arr_along_x = remove_baseline_wander(sum_arr_along_x)
     peaks_x, peaks_y = find_peaks(filtered_sum_arr_along_x)
-    y_coord_dict, baseline_y, kw_per_pixel = generate_dict_y_coords_for_kW(peaks_x)
+    y_coord_dict, baseline_y, kw_per_pixel = data_tools.generate_dict_y_coords_for_kW(peaks_x)
     
     return y_coord_dict, baseline_y, kw_per_pixel

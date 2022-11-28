@@ -1,5 +1,5 @@
 .DS_Store
 /Data/
 access_token.rtf
-
+.ipynb_checkpoints/*
 # someotherstuff
