@@ -2,4 +2,5 @@
 /Data/
 access_token.rtf
 .ipynb_checkpoints/*
-# someotherstuff
+*.pyc
+__pycache__/
