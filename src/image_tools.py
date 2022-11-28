@@ -73,3 +73,15 @@ def convolve_image_horizontal_filter(img, width=25):
 
 
 
+def find_data_coordinates(img):
+    # Bring it all together
+    
+    col_names = ['r', 'g', 'b']
+    df_coloured_pixels = find_all_non_white_pixels(img, col_names)
+    target_col_dict = identify_rgb_of_data(df_coloured_pixels, col_names, show_plots=False)
+    arr_data_pix_coords = find_all_data_point_pixel_locations(img, target_col_dict)
+    
+    return arr_data_pix_coords
+
+
+
