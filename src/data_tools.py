@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import os
+import datetime
 
 
 
@@ -46,3 +47,17 @@ def generate_csv_all_data():
     all_data = pd.concat(df_list, ignore_index=True).drop_duplicates()
     
     return all_data
+
+
+
+def convert_x_data_to_datetime(date_str, data_x_in_seconds):
+    
+    dtime = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    
+    new_data = []
+    
+    for data in data_x_in_seconds:
+        converted_data = dtime + datetime.timedelta(seconds=data)
+        new_data.append(converted_data)
+        
+    return np.array(new_data)
