@@ -26,24 +26,27 @@ def generate_dict_y_coords_for_kW(y_grid_line_coords, y_values_on_graph=[4,2,0,-
 
 
 
-def generate_csv_all_data():
+def generate_csv_all_data(relative_path, file_ending=".csv"):
     
     """ 
     generate a csv with concatenation of all csv data in data/grid/ directory
     
     """
     
-    relative_path_to_grid_data = os.path.join("data","grid_data")
-    all_csv = [name for name in os.listdir(relative_path_to_grid_data) if name.endswith(".csv")]
+    all_csv = [name for name in os.listdir(relative_path) if name.endswith(file_ending)]
     cwd = os.getcwd()
 
     df_list = []
 
     for csv_name in all_csv:
 
-        path = os.path.join(cwd, relative_path_to_grid_data, csv_name)
-        df_list.append(pd.read_csv(path))
-
+        path = os.path.join(cwd, relative_path, csv_name)
+        
+        try:
+            df_list.append(pd.read_csv(path))
+        except UnicodeDecodeError: # if files are .xlsx then read_csv doesn't work
+            df_list.append(pd.read_excel(path))
+            
     all_data = pd.concat(df_list, ignore_index=True).drop_duplicates()
     
     return all_data
@@ -61,3 +64,10 @@ def convert_x_data_to_datetime(date_str, data_x_in_seconds):
         new_data.append(converted_data)
         
     return np.array(new_data)
+
+def extract_data_for_day(df, date_str):
+    
+    dtime = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    day_after = dtime + datetime.timedelta(days=1)
+    
+    return df.loc[(df['datetime'] > dtime) & (df['datetime'] < day_after)]
