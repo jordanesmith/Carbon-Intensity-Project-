@@ -65,9 +65,37 @@ def convert_x_data_to_datetime(date_str, data_x_in_seconds):
         
     return np.array(new_data)
 
+
 def extract_data_for_day(df, date_str):
     
     dtime = datetime.datetime.strptime(date_str, "%Y-%m-%d")
     day_after = dtime + datetime.timedelta(days=1)
     
     return df.loc[(df['datetime'] > dtime) & (df['datetime'] < day_after)]
+
+
+
+def prepare_ci_and_battery_data(day_str, battery_data, ci_data):
+    
+    # filter data from specific day
+    battery_data_for_day = extract_data_for_day(battery_data, day_str)
+    ci_data_for_day = extract_data_for_day(ci_data, day_str)
+
+    # interpolate ci_data to align with battery_data
+    time_intervals = battery_data_for_day["datetime"]
+    ci_data_y = ci_data_for_day["Actual Carbon Intensity (gCO2/kWh)"]
+    new_x_coords = np.arange(len(time_intervals)) * len(ci_data_y) / len(time_intervals)
+    interpolated_ci_data = np.interp(new_x_coords, np.arange(len(ci_data_y)), ci_data_y.astype("float"))
+
+    # format the array
+    times = pd.Series(battery_data_for_day["datetime"].to_numpy(), name="datetime")
+    battery_vals = pd.Series(battery_data_for_day["NetChargingRate(kW)"].to_numpy(), name="battery_power_consumption/kWh") 
+    ci_vals = pd.Series(interpolated_ci_data, name='act_carbon_intensity/(gCO2/kWh)')
+
+    ci_and_battery_data = pd.concat([times,ci_vals,battery_vals],axis=1)
+    
+    return ci_and_battery_data
+
+
+
+
