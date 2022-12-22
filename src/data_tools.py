@@ -89,7 +89,7 @@ def prepare_ci_and_battery_data(day_str, battery_data, ci_data):
 
     # format the array
     times = pd.Series(battery_data_for_day["datetime"].to_numpy(), name="datetime")
-    battery_vals = pd.Series(battery_data_for_day["NetChargingRate(kW)"].to_numpy(), name="battery_power_consumption/kWh") 
+    battery_vals = pd.Series(battery_data_for_day["NetChargingRate(kW)"].to_numpy(), name="battery_power_consumption/kW") 
     ci_vals = pd.Series(interpolated_ci_data, name='act_carbon_intensity/(gCO2/kWh)')
 
     ci_and_battery_data = pd.concat([times,ci_vals,battery_vals],axis=1)
