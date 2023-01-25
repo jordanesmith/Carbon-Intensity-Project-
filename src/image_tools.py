@@ -62,7 +62,8 @@ def identify_rgb_of_data(df_coloured_pixels, col_names, show_plots=False):
             axs[i].set_ylim(0,255)
         
     if show_plots:
-        return target_col_dict, fig.tight_layout()
+        fig.tight_layout()
+        return target_col_dict, fig
     else:
         return target_col_dict
 
