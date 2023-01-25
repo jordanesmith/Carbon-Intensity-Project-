@@ -1,4 +1,4 @@
-# Carbon-Intensity-Project-
+# Carbon Intensity Project
 ## What is it?
 This project aims to look at the carbon intensity of the UK electricity grid over a 24 hour cycle, and optimise the charging/ discharging of a residential household battery to minimse CO2.
 As part of this project, I have created a function to calculate the carbon intensity from a given battery
