@@ -15,6 +15,9 @@ The battery data was provided by a friend who wants to reduce his Carbon Footpri
 ## Where can I find the data?
 The data is available in the data folder of the Github repo.
 
+## What Research has been done?
+See the Jupyter Notebooks (files ending in `.ipynb`)
+
 ## How do I use it?
 To use this project, you will need to install the following packages:
 
