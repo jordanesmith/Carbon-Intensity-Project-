@@ -53,7 +53,7 @@ It was found that the most commonly occuring RGB values corresponded to the "tea
 Now that we have the coordinates of all the data, we can find the x axis values. Simply, the min x value of data corresponds to midnight (start), and max corresponds to midnight (end).
 
 
-![data over 24 hour cycle](images/battery_data_extracted_from_images.png)
+![data over 24 hour cycle](images/battery_image_data_extracted.png)
 
 
 ## How do I use it?
