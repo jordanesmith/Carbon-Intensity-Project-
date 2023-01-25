@@ -4,6 +4,8 @@ This project aims to look at the carbon intensity of the UK electricity grid ove
 As part of this project, I have created a function to calculate the carbon intensity from a given battery
 charge profile.
 
+![data over 24 hour cycle](images/example_24hour_cycle_CI_and_battery_data.png)
+
 ## How does it work?
 The project uses data from the National Grid ESO's [Carbon Intensity forecast API](https://carbonintensity.org.uk/), with historic predictions and ground truth data.
 
