@@ -20,6 +20,42 @@ The data is available in the data folder of the Github repo.
 ## What Research has been done?
 See the Jupyter Notebooks (files ending in `.ipynb`)
 
+Data came in images.
+
+![](images/battery_data_before_scraping.png)
+
+To find the y grid locations in pixel coordinates, I deployed signals processing/ Computer vision methods. Firstly, I convolved the images with a horizontal kernal.
+
+![](images/battery_data_convolved_hor_filter.png)
+
+The y axis grid lines have a high response to this horizontal filter, as they are also horizontal lines.
+
+By summing the image response to this filter across the x axis I find the total response for each "row" in the image. This leads to the expected result of  peaks for y axis values that correspond to where the y grid axes are. In image below we see this plot.
+
+Clearly there are also peaks corresponding to the bounding boxe near the top of the images (two horizontal lines offset in y direction, corresponding to the 2 peaks near the left of the below plot). 
+
+Picture this plot rotated 90 degrees. It corresponds to the above image.
+
+![](images/battery_data_peaks_y_coords_analysis.png)
+
+Using thresholds, alongside other signals processing methods, we can ignore the noise and find the peaks corresponding to the y grid axis.
+
+This provides us with a systematic way to find the y axis pixel locations. This was checked against the original image, and corresponds perfectly, see image below.
+
+![](images/battery_data_check_on_y_axis.png)
+
+From here, we have the y axis. If we find the rgb values corresponding to the colour of data points in the plots, we can find the pixel locations of all data. This was done by analysing the RGB values of every pixel in the image, alongside the most popular values for each R/G/B, see image below. 
+
+![](images/battery_data_finding_rgb_of_data.png)
+
+It was found that the most commonly occuring RGB values corresponded to the "teal" colour which was that used for data points. A quick search over the image finds all of these data points. 
+
+Now that we have the coordinates of all the data, we can find the x axis values. Simply, the min x value of data corresponds to midnight (start), and max corresponds to midnight (end).
+
+
+![data over 24 hour cycle](images/battery_data_extracted_from_images.png)
+
+
 ## How do I use it?
 To use this project, you will need to install the following packages:
 
